@@ -18,8 +18,6 @@ struct NetworkManager {
 
     static let shared = NetworkManager()
     private init() {}
-    
-    
 
     
     // MARK: -

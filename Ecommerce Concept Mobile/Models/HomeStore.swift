@@ -7,8 +7,8 @@
 
 import Foundation
 
-// MARK: - HomeStore
-struct HomeStore: Codable {
+// MARK: - HomeStore Model
+struct HomeStore: Codable, Hashable {
     let homeStore: [HomeStoreElement]
     let bestSeller: [BestSeller]
 
@@ -19,7 +19,7 @@ struct HomeStore: Codable {
 }
 
 // MARK: - BestSeller
-struct BestSeller: Codable {
+struct BestSeller: Codable, Hashable {
     let id: Int
     let isFavorites: Bool
     let title: String
@@ -37,7 +37,7 @@ struct BestSeller: Codable {
 }
 
 // MARK: - HomeStoreElement
-struct HomeStoreElement: Codable {
+struct HomeStoreElement: Codable, Hashable {
     let id: Int
     let isNew: Bool?
     let title, subtitle: String
