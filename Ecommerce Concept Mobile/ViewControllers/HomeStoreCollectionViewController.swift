@@ -12,14 +12,14 @@ import UIKit
 // Основной VC
 class HomeStoreCollectionViewController: UICollectionViewController {
     
-    
-    typealias DataSourse = UICollectionViewDiffableDataSource<ItemsList, AnyHashable>
-    typealias Snapshot = NSDiffableDataSourceSnapshot<ItemsList, AnyHashable>
-    
-    
     // MARK: - Properties
         
-    var dataSourse: DataSourse?
+    typealias DataSource = UICollectionViewDiffableDataSource<ItemsList, AnyHashable>
+    typealias Snapshot = NSDiffableDataSourceSnapshot<ItemsList, AnyHashable>
+    
+    var dataSource: DataSource?
+//    var collectionView: UICollectionView!
+    
     
     private var sections: [ItemsList] = [] {
         didSet {
@@ -32,11 +32,23 @@ class HomeStoreCollectionViewController: UICollectionViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        view.backgroundColor = .orange
+        
         setupCollectionView()
-        createDataSourse()
+        createDataSourсe()
+        setupNavigationBar()
         reloadData()
     }
     
+    // MARK: - Init
+    init() {
+        super.init(collectionViewLayout: UICollectionViewLayout())
+//        cellBuilder = CellBuilder()
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     
     // MARK: - Private func
     
@@ -49,73 +61,43 @@ class HomeStoreCollectionViewController: UICollectionViewController {
         
     }
     
-    
-    
-    
     // MARK: - Настройка `Collection View`
-    
-    
-    
-    func setupCollectionView() {
+
+    private func setupCollectionView() {
         
-        collectionView = UICollectionView(frame: view.bounds,
-                                          collectionViewLayout: UICollectionViewLayout())    //createCompositionalLayout()
-        collectionView.autoresizingMask = [.flexibleWidth, .flexibleHeight] // чтобы расстягивалось по разным устройствам
-        
-        collectionView.register(UICollectionViewCell.self, forCellWithReuseIdentifier: "cellid")
-        
+        collectionView = UICollectionView(frame: view.bounds, collectionViewLayout: createCompositionalLayout())
+        collectionView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+        // добавление collectionView на экран
+//        view.addSubview(collectionView)
+        //регистрация ячеек
         collectionView.register(CategoryCollectionViewCell.self, forCellWithReuseIdentifier: CategoryCollectionViewCell.reuseId)
-        collectionView.register(BestSellerCollectionViewCell.self, forCellWithReuseIdentifier: BestSellerCollectionViewCell.reuseId)
-        
         collectionView.register(UINib(nibName: String(describing: HotSalesCollectionViewCell.self), bundle: nil),
-                                      forCellWithReuseIdentifier: HotSalesCollectionViewCell.reuseId)
+                                forCellWithReuseIdentifier: HotSalesCollectionViewCell.reuseId)
+        collectionView.register(UINib(nibName: String(describing: BestSellerCollectionViewCell.self), bundle: nil),
+                                forCellWithReuseIdentifier: BestSellerCollectionViewCell.reuseId)
         
-//        collectionView.register(UINib(nibName: String(describing: SectionHeader.self), bundle: nil), forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: String(describing: SectionHeader.self))
         
-        view.addSubview(collectionView)
+//        collectionView.translatesAutoresizingMaskIntoConstraints = false
+//
+//        NSLayoutConstraint.activate([
+//            collectionView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
+//            collectionView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+//            collectionView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+//            collectionView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
+//        ])
     }
     
     
     // MARK: - Diffable Data Source
-    private func createDataSourse() {
+    private func createDataSourсe() {
         /// Настраивает ячейки в зависимости от секции
-        dataSourse = DataSourse(collectionView: collectionView,
+        dataSource = DataSource(collectionView: collectionView,
                                 cellProvider: { (collectionView, indexPath, item) -> UICollectionViewCell? in
-                        
-            
-            
-//            if let article = item as? Article, let cell = collectionView.dequeueReusableCell(withReuseIdentifier: Section.articles.cellIdentifier, for: indexPath) as? ArticleCell {
-//                cell.article = article
-//                return cell
-//            }
-//
-//            if let image = item as? ArticleImage, let cell = collectionView.dequeueReusableCell(withReuseIdentifier: Section.trends.cellIdentifier, for: indexPath) as? ImageCell {
-//                cell.image = image
-//                return cell
-//            }
-//
-//            fatalError()
-//        }
-            
-            if let categoryItem = item as? CategoryElements,
-               let selectCategoryCell = collectionView.dequeueReusableCell(withReuseIdentifier: CategoryCollectionViewCell.reuseId,
-                                                                           for: indexPath) as? CategoryCollectionViewCell {
-                selectCategoryCell.configure(with: categoryItem)
-            return selectCategoryCell
-            }
-            
-            if let hotSalesItem = item as? HomeStoreElement,
-               let hotSalesCell = collectionView.dequeueReusableCell(withReuseIdentifier: String(describing: HotSalesCollectionViewCell.self),
-                                                                     for: indexPath) as? HotSalesCollectionViewCell {
-                hotSalesCell.configure(with: hotSalesItem)
-            return hotSalesCell
-            }
-            
             
             switch self.sections[indexPath.section].section {
                 
             case .selectCategory:
-                if let categoryItem = item as? CategoryElements,
+                if let categoryItem = item as? CategoryElement,
                    let selectCategoryCell = collectionView.dequeueReusableCell(withReuseIdentifier: CategoryCollectionViewCell.reuseId,
                                                                                for: indexPath) as? CategoryCollectionViewCell {
                     selectCategoryCell.configure(with: categoryItem)
@@ -123,18 +105,22 @@ class HomeStoreCollectionViewController: UICollectionViewController {
                 }
                 
             case .hotSales:
-                let hotSalesCell = collectionView.dequeueReusableCell(withReuseIdentifier: String(describing: HotSalesCollectionViewCell.self), for: indexPath) as? HotSalesCollectionViewCell
                 
-                //                cellBuilder.configureCell(for: cell, with: viewModel.mainMenuCellViewModel(with: indexPath))
                 
-                return hotSalesCell
-                
+                if let hotSalesItem = item as? HomeStoreElement,
+                   let hotSalesCell = collectionView.dequeueReusableCell(withReuseIdentifier: String(describing: HotSalesCollectionViewCell.self),
+                                                                         for: indexPath) as? HotSalesCollectionViewCell {
+                    hotSalesCell.configure(with: hotSalesItem)
+                    return hotSalesCell
+                }
+                    
             case .bestSeller:
-                let bestSellerCell = collectionView.dequeueReusableCell(withReuseIdentifier: String(describing: BestSellerCollectionViewCell.self), for: indexPath) as? BestSellerCollectionViewCell
-                
-                //                cellBuilder.configureCell(for: cell, with: viewModel.mainMenuCellViewModel(with: indexPath))
-                
-                return bestSellerCell
+                    if let bestSellerItem = item as? BestSeller,
+                       let bestSellerCell = collectionView.dequeueReusableCell(withReuseIdentifier: String(describing: BestSellerCollectionViewCell.self),
+                                                                               for: indexPath) as? BestSellerCollectionViewCell {
+                        bestSellerCell.configure(with: bestSellerItem)
+                        return bestSellerCell
+                    }
             }
         })
     }
@@ -146,7 +132,7 @@ class HomeStoreCollectionViewController: UICollectionViewController {
         for section in sections {
             snapshot.appendItems(section.items, toSection: section)
         }
-        dataSourse?.apply(snapshot)
+        dataSource?.apply(snapshot)
     }
     
     // MARK: - CollectionViewCompositionalLayout
@@ -267,7 +253,20 @@ class HomeStoreCollectionViewController: UICollectionViewController {
     }
     */
 
-    
+    // MARK: - Navigation Bar
+    private func setupNavigationBar() {
+        title = "PizzaShop"
+        navigationController?.navigationBar.prefersLargeTitles = true
+        let navBarAppearance = UINavigationBarAppearance()
+        navBarAppearance.configureWithOpaqueBackground()
+        
+        navBarAppearance.titleTextAttributes = [.foregroundColor: UIColor.white]
+        navBarAppearance.largeTitleTextAttributes = [.foregroundColor: UIColor.white]
+        navBarAppearance.backgroundColor = UIColor.brown
+        
+        navigationController?.navigationBar.standardAppearance = navBarAppearance
+        navigationController?.navigationBar.scrollEdgeAppearance = navBarAppearance
+    }
     
     // MARK: -
     

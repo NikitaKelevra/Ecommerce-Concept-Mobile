@@ -13,7 +13,7 @@ import UIKit
  /// Секции основного экрана c соответствующими  элементами в них
 struct ItemsList: Hashable {
     let section: TypeOfItem
-    let items: [Items]
+    let items: [AnyHashable]
 }
 
 enum TypeOfItem: Hashable {
@@ -22,15 +22,19 @@ enum TypeOfItem: Hashable {
     case bestSeller
 }
 
-enum Items: Hashable  {
-    case selectCategory(CategoryElements)
-    case hotSales(HomeStoreElement)
-    case bestSeller(BestSeller)
-}
 
 // MARK: - CategoryElements Model
 
-struct CategoryElements: Hashable {
+struct CategoryElement: Hashable {
     let title: String
     let picture: String
 }
+
+let categoryArray = [
+    ("Phones", ""),
+    ("Computer", ""),
+    ("Health", ""),
+    ("Books", ""),
+    ("_", ""),
+    ("_", "")
+]

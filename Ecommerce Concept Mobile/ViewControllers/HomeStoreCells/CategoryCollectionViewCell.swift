@@ -30,7 +30,7 @@ class CategoryCollectionViewCell: UICollectionViewCell {
         self.clipsToBounds = true
     }
     
-    func configure(with item: CategoryElements) {
+    func configure(with item: CategoryElement) {
         categoryImageView.image = UIImage(named: item.picture)
         categoryTitle = item.title
     }
