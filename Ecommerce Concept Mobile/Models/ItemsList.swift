@@ -22,6 +22,11 @@ enum TypeOfItem: Hashable {
     case bestSeller
 }
 
+enum Item: Hashable {
+    case selectCategory(CategoryElement)
+    case hotSales(HomeStoreElement)
+    case bestSeller(BestSeller)
+}
 
 // MARK: - CategoryElements Model
 
@@ -30,11 +35,3 @@ struct CategoryElement: Hashable {
     let picture: String
 }
 
-let categoryArray = [
-    ("Phones", ""),
-    ("Computer", ""),
-    ("Health", ""),
-    ("Books", ""),
-    ("_", ""),
-    ("_", "")
-]

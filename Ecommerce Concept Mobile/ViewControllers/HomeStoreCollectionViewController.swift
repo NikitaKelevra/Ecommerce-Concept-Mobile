@@ -10,7 +10,7 @@ import UIKit
 //private let reuseIdentifier = "Cell"
 
 // Основной VC
-class HomeStoreCollectionViewController: UICollectionViewController {
+final class HomeStoreCollectionViewController: UICollectionViewController {
     
     // MARK: - Properties
         
@@ -21,23 +21,23 @@ class HomeStoreCollectionViewController: UICollectionViewController {
 //    var collectionView: UICollectionView!
     
     
-    private var sections: [ItemsList] = [] {
-        didSet {
-            fetchProducts()  // подгружаем данные
-        }
-    }
+    private var sections: [ItemsList] = []
     
     
     // MARK: - viewDidLoad
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        view.backgroundColor = .orange
+        view.backgroundColor = .orange  // тестовое
+        
+        fetchCategories()
+        fetchProducts()
         
         setupCollectionView()
         createDataSourсe()
         setupNavigationBar()
         reloadData()
+        
     }
     
     // MARK: - Init
@@ -51,6 +51,32 @@ class HomeStoreCollectionViewController: UICollectionViewController {
     }
     
     // MARK: - Private func
+    
+    private func fetchCategories() {
+        
+        let categoryArray = [
+            ("Phones", "Phones"),
+            ("Computer", "Computer"),
+            ("Health", "Health"),
+            ("Books", "Books"),
+            (" ", ""),
+        ]
+        var items: [CategoryElement] = []
+        
+        for category in categoryArray {
+            let item = CategoryElement.init(title: category.0, picture: category.1)
+            items.append(item)
+        }
+        sections.append(ItemsList.init(section: .selectCategory, items: items))
+        
+//        let imageName = photos[indexPath.item]
+//        let image = UIImage(named: imageName)
+//
+//        cell.legacyImageView.image = image
+//        cell.backgroundColor = .black
+    }
+    
+    
     
     private func fetchProducts() {
         NetworkManager.shared.fetchHomeStoreData(completion: { homeStoreData, error in
@@ -68,7 +94,7 @@ class HomeStoreCollectionViewController: UICollectionViewController {
         collectionView = UICollectionView(frame: view.bounds, collectionViewLayout: createCompositionalLayout())
         collectionView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
         // добавление collectionView на экран
-//        view.addSubview(collectionView)
+        view.addSubview(collectionView)
         //регистрация ячеек
         collectionView.register(CategoryCollectionViewCell.self, forCellWithReuseIdentifier: CategoryCollectionViewCell.reuseId)
         collectionView.register(UINib(nibName: String(describing: HotSalesCollectionViewCell.self), bundle: nil),
@@ -94,49 +120,81 @@ class HomeStoreCollectionViewController: UICollectionViewController {
         dataSource = DataSource(collectionView: collectionView,
                                 cellProvider: { (collectionView, indexPath, item) -> UICollectionViewCell? in
             
-            switch self.sections[indexPath.section].section {
+            switch item {
                 
-            case .selectCategory:
-                if let categoryItem = item as? CategoryElement,
-                   let selectCategoryCell = collectionView.dequeueReusableCell(withReuseIdentifier: CategoryCollectionViewCell.reuseId,
-                                                                               for: indexPath) as? CategoryCollectionViewCell {
-                    selectCategoryCell.configure(with: categoryItem)
+            case let item as CategoryElement:
+                guard let selectCategoryCell = collectionView.dequeueReusableCell(withReuseIdentifier: CategoryCollectionViewCell.reuseId,
+                                                                                  for: indexPath) as? CategoryCollectionViewCell
+                else { fatalError("Cannot create new cell") }
+                selectCategoryCell.configure(with: item)
                 return selectCategoryCell
-                }
                 
-            case .hotSales:
+            case let item as HomeStoreElement:
+                guard let hotSalesCell = collectionView.dequeueReusableCell(withReuseIdentifier: HotSalesCollectionViewCell.reuseId,
+                                                                            for: indexPath) as? HotSalesCollectionViewCell
+                else { fatalError("Cannot create new cell") }
+                hotSalesCell.configure(with: item)
+                return hotSalesCell
                 
+            case let item as BestSeller:
+                guard let bestSellerCell = collectionView.dequeueReusableCell(withReuseIdentifier: BestSellerCollectionViewCell.reuseId,
+                                                                              for: indexPath) as? BestSellerCollectionViewCell
+                else { fatalError("Cannot create new cell") }
+                bestSellerCell.configure(with: item)
+                return bestSellerCell
                 
-                if let hotSalesItem = item as? HomeStoreElement,
-                   let hotSalesCell = collectionView.dequeueReusableCell(withReuseIdentifier: String(describing: HotSalesCollectionViewCell.self),
-                                                                         for: indexPath) as? HotSalesCollectionViewCell {
-                    hotSalesCell.configure(with: hotSalesItem)
-                    return hotSalesCell
-                }
-                    
-            case .bestSeller:
-                    if let bestSellerItem = item as? BestSeller,
-                       let bestSellerCell = collectionView.dequeueReusableCell(withReuseIdentifier: String(describing: BestSellerCollectionViewCell.self),
-                                                                               for: indexPath) as? BestSellerCollectionViewCell {
-                        bestSellerCell.configure(with: bestSellerItem)
-                        return bestSellerCell
-                    }
+            default:
+                let cell = UICollectionViewCell()
+                return cell
             }
+            
+            
+            
+//
+//
+//            switch self.sections[indexPath.section].section {
+//
+//            case .selectCategory:
+//                if let categoryItem = item as? CategoryElement,
+//                   let selectCategoryCell = collectionView.dequeueReusableCell(withReuseIdentifier: CategoryCollectionViewCell.reuseId,
+//                                                                               for: indexPath) as? CategoryCollectionViewCell {
+//                    selectCategoryCell.configure(with: categoryItem)
+//                return selectCategoryCell
+//                }
+//
+//            case .hotSales:
+//                if let hotSalesItem = item as? HomeStoreElement,
+//                   let hotSalesCell = collectionView.dequeueReusableCell(withReuseIdentifier: String(describing: HotSalesCollectionViewCell.self),
+//                                                                         for: indexPath) as? HotSalesCollectionViewCell {
+//                    hotSalesCell.configure(with: hotSalesItem)
+//                    return hotSalesCell
+//                }
+//
+//            case .bestSeller:
+//                    if let bestSellerItem = item as? BestSeller,
+//                       let bestSellerCell = collectionView.dequeueReusableCell(withReuseIdentifier: String(describing: BestSellerCollectionViewCell.self),
+//                                                                               for: indexPath) as? BestSellerCollectionViewCell {
+//                        bestSellerCell.configure(with: bestSellerItem)
+//                        return bestSellerCell
+//                    }
+//            }
+            
+
         })
     }
     
     // Перезагружает данные в CollectionView
     private func reloadData() {
         var snapshot = Snapshot()
-        snapshot.appendSections(sections) /// добавляем секции в snapshot
+        snapshot.appendSections(sections) /// добавляем секции в снимок данных
         for section in sections {
-            snapshot.appendItems(section.items, toSection: section)
+            snapshot.appendItems(section.items, toSection: section) /// добавляем данные в секции
         }
         dataSource?.apply(snapshot)
     }
     
     // MARK: - CollectionViewCompositionalLayout
-    func createCompositionalLayout() -> UICollectionViewLayout {
+    private func createCompositionalLayout() -> UICollectionViewLayout {
         let layout = UICollectionViewCompositionalLayout { (sectionIndex, layoutEnvironment) -> NSCollectionLayoutSection? in
             let section = self.sections[sectionIndex]
             
@@ -153,7 +211,7 @@ class HomeStoreCollectionViewController: UICollectionViewController {
         return layout
     }
     
-    func createSelectCategorySection()  -> NSCollectionLayoutSection {
+    private func createSelectCategorySection()  -> NSCollectionLayoutSection {
         let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1),
                                               heightDimension: .fractionalHeight(1))
         let layoutItem = NSCollectionLayoutItem(layoutSize: itemSize)
@@ -171,7 +229,7 @@ class HomeStoreCollectionViewController: UICollectionViewController {
         return layoutSection
     }
     
-    func createHotSalesSection()  -> NSCollectionLayoutSection {
+    private func createHotSalesSection()  -> NSCollectionLayoutSection {
         let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .fractionalHeight(86))
         let item = NSCollectionLayoutItem(layoutSize: itemSize)
         item.contentInsets = NSDirectionalEdgeInsets.init(top: 0, leading: 0, bottom: 8, trailing: 0)
@@ -186,7 +244,7 @@ class HomeStoreCollectionViewController: UICollectionViewController {
         return section
     }
     
-    func createBestSellerSection()  -> NSCollectionLayoutSection {
+    private func createBestSellerSection()  -> NSCollectionLayoutSection {
         let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .fractionalHeight(86))
         let item = NSCollectionLayoutItem(layoutSize: itemSize)
         item.contentInsets = NSDirectionalEdgeInsets.init(top: 0, leading: 0, bottom: 8, trailing: 0)
@@ -255,17 +313,17 @@ class HomeStoreCollectionViewController: UICollectionViewController {
 
     // MARK: - Navigation Bar
     private func setupNavigationBar() {
-        title = "PizzaShop"
-        navigationController?.navigationBar.prefersLargeTitles = true
+//        title = "PizzaShop"
+        navigationController?.navigationBar.prefersLargeTitles = false
         let navBarAppearance = UINavigationBarAppearance()
-        navBarAppearance.configureWithOpaqueBackground()
-        
-        navBarAppearance.titleTextAttributes = [.foregroundColor: UIColor.white]
-        navBarAppearance.largeTitleTextAttributes = [.foregroundColor: UIColor.white]
+//        navBarAppearance.configureWithOpaqueBackground()
+//
+//        navBarAppearance.titleTextAttributes = [.foregroundColor: UIColor.white]
+//        navBarAppearance.largeTitleTextAttributes = [.foregroundColor: UIColor.white]
         navBarAppearance.backgroundColor = UIColor.brown
-        
-        navigationController?.navigationBar.standardAppearance = navBarAppearance
-        navigationController?.navigationBar.scrollEdgeAppearance = navBarAppearance
+//
+//        navigationController?.navigationBar.standardAppearance = navBarAppearance
+//        navigationController?.navigationBar.scrollEdgeAppearance = navBarAppearance
     }
     
     // MARK: -
