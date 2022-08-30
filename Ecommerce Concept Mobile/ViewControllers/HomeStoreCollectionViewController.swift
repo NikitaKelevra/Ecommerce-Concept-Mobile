@@ -80,9 +80,13 @@ final class HomeStoreCollectionViewController: UICollectionViewController {
     
     private func fetchProducts() {
         NetworkManager.shared.fetchHomeStoreData(completion: { homeStoreData, error in
-            
-//            self.homeStore = homeStoreData
-            print("\(String(describing: homeStoreData))")
+            guard let bestSellerItems = homeStoreData?.bestSeller,
+                  let homeStoreItems = homeStoreData?.homeStore else { return }
+                    
+            print(bestSellerItems.isEmpty, homeStoreItems.isEmpty)
+            self.sections.append(ItemsList.init(section: .bestSeller, items: bestSellerItems))
+            self.sections.append(ItemsList.init(section: .hotSales, items: homeStoreItems))
+
         })
         
     }
