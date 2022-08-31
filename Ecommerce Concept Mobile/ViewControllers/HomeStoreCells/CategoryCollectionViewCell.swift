@@ -9,16 +9,11 @@ import UIKit
 
 class CategoryCollectionViewCell: UICollectionViewCell {
 
-    override func awakeFromNib() {
-        super.awakeFromNib()
-        // Initialization code
-    }
-    
-    
     static var reuseId: String = "CategoryCollectionViewCell"
     
-    var categoryTitle = String()
-    let categoryImageView = UIImageView()
+    private var categoryTitle = String()
+    private let categoryImageView = UIImageView()
+    
     
     override init(frame: CGRect) {
         super.init(frame: frame)

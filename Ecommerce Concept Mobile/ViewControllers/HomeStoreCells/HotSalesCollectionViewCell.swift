@@ -11,6 +11,7 @@ class HotSalesCollectionViewCell: UICollectionViewCell {
 
     static var reuseId: String = "HotSalesCollectionViewCell"
 
+    @IBOutlet weak var mainImageView: UIImageView!
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -19,7 +20,7 @@ class HotSalesCollectionViewCell: UICollectionViewCell {
 
     
     func configure(with item: HomeStoreElement) {
-//        categoryImageView.image = UIImage(named: item.picture)
+        mainImageView.image = UIImage(named: item.picture)
 //        categoryTitle = item.title
     }
 }
