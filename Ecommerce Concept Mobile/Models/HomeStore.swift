@@ -7,6 +7,8 @@
 
 import Foundation
 
+
+// Модели элементов основного экрана
 // MARK: - HomeStore Model
 struct HomeStore: Codable, Hashable {
     let homeStore: [HomeStoreElement]
@@ -50,4 +52,12 @@ struct HomeStoreElement: Codable, Hashable {
         case title, subtitle, picture
         case isBuy = "is_buy"
     }
+}
+
+
+// MARK: - CategoryElements Model
+
+struct CategoryElement: Hashable {
+    let title: String
+    let picture: String
 }

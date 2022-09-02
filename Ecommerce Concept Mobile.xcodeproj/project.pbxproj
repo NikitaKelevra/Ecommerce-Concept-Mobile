@@ -23,6 +23,7 @@
 		68B7356828BA6AD5008C0C0F /* BestSellerCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 68B7356628BA6AD5008C0C0F /* BestSellerCollectionViewCell.xib */; };
 		68B7356B28BA6B1A008C0C0F /* HotSalesCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68B7356928BA6B1A008C0C0F /* HotSalesCollectionViewCell.swift */; };
 		68B7356C28BA6B1A008C0C0F /* HotSalesCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 68B7356A28BA6B1A008C0C0F /* HotSalesCollectionViewCell.xib */; };
+		68B7356E28C1D9BA008C0C0F /* CategoriesData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68B7356D28C1D9BA008C0C0F /* CategoriesData.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -44,6 +45,7 @@
 		68B7356628BA6AD5008C0C0F /* BestSellerCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = BestSellerCollectionViewCell.xib; sourceTree = "<group>"; };
 		68B7356928BA6B1A008C0C0F /* HotSalesCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HotSalesCollectionViewCell.swift; sourceTree = "<group>"; };
 		68B7356A28BA6B1A008C0C0F /* HotSalesCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = HotSalesCollectionViewCell.xib; sourceTree = "<group>"; };
+		68B7356D28C1D9BA008C0C0F /* CategoriesData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoriesData.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -100,6 +102,7 @@
 		68B7354F28B7FCC3008C0C0F /* Resourses */ = {
 			isa = PBXGroup;
 			children = (
+				68B7356D28C1D9BA008C0C0F /* CategoriesData.swift */,
 				68B7354328B7FC00008C0C0F /* Assets.xcassets */,
 			);
 			path = Resourses;
@@ -225,6 +228,7 @@
 				68B7355C28B805F2008C0C0F /* HomeStoreCollectionViewController.swift in Sources */,
 				68B7355828B800E8008C0C0F /* Specifications.swift in Sources */,
 				68B7356428BA6953008C0C0F /* ItemsList.swift in Sources */,
+				68B7356E28C1D9BA008C0C0F /* CategoriesData.swift in Sources */,
 				68B7356B28BA6B1A008C0C0F /* HotSalesCollectionViewCell.swift in Sources */,
 				68B7353B28B7FBFF008C0C0F /* AppDelegate.swift in Sources */,
 				68B7353D28B7FBFF008C0C0F /* SceneDelegate.swift in Sources */,

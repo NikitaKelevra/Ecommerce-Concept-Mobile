@@ -4,30 +4,87 @@
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19454"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
         <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="gTV-IL-0wX" customClass="HotSalesCollectionViewCell" customModule="Ecommerce_Concept_Mobile" customModuleProvider="target">
-            <rect key="frame" x="0.0" y="0.0" width="384" height="221"/>
+            <rect key="frame" x="0.0" y="0.0" width="531" height="199"/>
             <autoresizingMask key="autoresizingMask"/>
             <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
-                <rect key="frame" x="0.0" y="0.0" width="384" height="221"/>
+                <rect key="frame" x="0.0" y="0.0" width="531" height="199"/>
                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                 <subviews>
                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ovv-YX-WGd">
-                        <rect key="frame" x="0.0" y="0.0" width="384" height="221"/>
+                        <rect key="frame" x="147" y="0.0" width="384" height="221"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     </imageView>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="New" textAlignment="center" lineBreakMode="tailTruncation" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Q30-q7-3hY">
+                        <rect key="frame" x="32" y="23" width="27" height="27"/>
+                        <color key="backgroundColor" systemColor="systemOrangeColor"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="27" id="ICm-tZ-Ode"/>
+                            <constraint firstAttribute="width" constant="27" id="uye-5k-d2F"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" type="system" pointSize="10"/>
+                        <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Iphone 12" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="H1h-GA-Scf">
+                        <rect key="frame" x="32" y="68" width="105.5" height="30"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="25"/>
+                        <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Super. Mega. Fast." textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="PGQ-W2-KpZ">
+                        <rect key="frame" x="32" y="103" width="97.5" height="13.5"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="11"/>
+                        <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bQ6-Rr-0vz">
+                        <rect key="frame" x="32" y="142.5" width="98" height="23"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="23" id="AfG-i3-Vne"/>
+                            <constraint firstAttribute="width" constant="98" id="eFM-Pd-WwO"/>
+                        </constraints>
+                        <state key="normal" title="Button"/>
+                        <buttonConfiguration key="configuration" style="plain" title="Buy now!" titleAlignment="center">
+                            <fontDescription key="titleFontDescription" name=".AppleSystemUIFont" family=".AppleSystemUIFont" pointSize="11"/>
+                            <color key="baseForegroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        </buttonConfiguration>
+                    </button>
                 </subviews>
             </view>
             <viewLayoutGuide key="safeArea" id="ZTg-uK-7eu"/>
-            <size key="customSize" width="384" height="221"/>
+            <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+            <constraints>
+                <constraint firstItem="bQ6-Rr-0vz" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" constant="32" id="H0u-az-jaL"/>
+                <constraint firstItem="Q30-q7-3hY" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" constant="32" id="JWu-i4-KFp"/>
+                <constraint firstItem="PGQ-W2-KpZ" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" constant="32" id="JgA-nj-Y17"/>
+                <constraint firstItem="Q30-q7-3hY" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" constant="23" id="Kzi-vl-hyE"/>
+                <constraint firstItem="H1h-GA-Scf" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" constant="32" id="P6U-hO-mbk"/>
+                <constraint firstItem="PGQ-W2-KpZ" firstAttribute="top" secondItem="H1h-GA-Scf" secondAttribute="bottom" constant="5" id="YtF-t9-hkZ"/>
+                <constraint firstItem="H1h-GA-Scf" firstAttribute="top" secondItem="Q30-q7-3hY" secondAttribute="bottom" constant="18" id="f6H-cB-tZl"/>
+                <constraint firstItem="bQ6-Rr-0vz" firstAttribute="top" secondItem="PGQ-W2-KpZ" secondAttribute="bottom" constant="26" id="lCJ-My-6Pa"/>
+            </constraints>
+            <size key="customSize" width="531" height="199"/>
             <connections>
+                <outlet property="brandTitleLabel" destination="H1h-GA-Scf" id="ish-kV-8ha"/>
+                <outlet property="buyButton" destination="bQ6-Rr-0vz" id="Qt8-NP-Ar4"/>
+                <outlet property="infoBrandLabel" destination="PGQ-W2-KpZ" id="eMx-o6-zQy"/>
                 <outlet property="mainImageView" destination="ovv-YX-WGd" id="z4v-t0-XLn"/>
+                <outlet property="newLabel" destination="Q30-q7-3hY" id="xPV-bd-qV2"/>
             </connections>
-            <point key="canvasLocation" x="-192.75362318840581" y="95.424107142857139"/>
+            <point key="canvasLocation" x="-86.231884057971016" y="87.388392857142847"/>
         </collectionViewCell>
     </objects>
+    <resources>
+        <systemColor name="systemOrangeColor">
+            <color red="1" green="0.58431372549019611" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
+    </resources>
 </document>

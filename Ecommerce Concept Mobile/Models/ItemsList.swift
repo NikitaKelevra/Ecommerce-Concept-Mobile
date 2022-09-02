@@ -6,9 +6,6 @@
 //
 
 import Foundation
-import UIKit
-
-// MARK: -
 
  /// Секции основного экрана c соответствующими  элементами в них
 struct ItemsList: Hashable {
@@ -21,17 +18,3 @@ enum TypeOfItem: Hashable {
     case hotSales
     case bestSeller
 }
-
-enum Item: Hashable {
-    case selectCategory(CategoryElement)
-    case hotSales(HomeStoreElement)
-    case bestSeller(BestSeller)
-}
-
-// MARK: - CategoryElements Model
-
-struct CategoryElement: Hashable {
-    let title: String
-    let picture: String
-}
-

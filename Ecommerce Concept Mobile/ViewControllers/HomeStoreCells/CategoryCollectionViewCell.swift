@@ -28,6 +28,7 @@ class CategoryCollectionViewCell: UICollectionViewCell {
     func configure(with item: CategoryElement) {
         categoryImageView.image = UIImage(named: item.picture)
         categoryTitle = item.title
+        
     }
     
     required init?(coder: NSCoder) {
