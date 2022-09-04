@@ -10,9 +10,9 @@ import Foundation
 // Массив категорий
 
 let categoryArray = [
-    ("Phones", "Phones"),
+    ("Phones", "Phone"),
     ("Computer", "Computer"),
     ("Health", "Health"),
     ("Books", "Books"),
-    (" ", " "),
+    ("Accessories", "Computer"),
 ]

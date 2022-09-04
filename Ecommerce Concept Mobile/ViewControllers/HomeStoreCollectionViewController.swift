@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import SwiftUI
 
 //private let reuseIdentifier = "Cell"
 
@@ -32,7 +33,6 @@ final class HomeStoreCollectionViewController: UICollectionViewController {
         
         setupCollectionView()
         createDataSourсe()
-        setupNavigationBar()
         reloadData()
         
     }
@@ -55,8 +55,8 @@ final class HomeStoreCollectionViewController: UICollectionViewController {
             let categoriesItems = self.fetchCategories(categoryArray)
             
             self.sections.append(ItemsList.init(section: .selectCategory, items: categoriesItems))
-            self.sections.append(ItemsList.init(section: .bestSeller, items: bestSellerItems))
             self.sections.append(ItemsList.init(section: .hotSales, items: homeStoreItems))
+            self.sections.append(ItemsList.init(section: .bestSeller, items: bestSellerItems))
             self.reloadData() /// перезагружаем интерфейс с новыми данными
         })
     }
@@ -71,29 +71,22 @@ final class HomeStoreCollectionViewController: UICollectionViewController {
     }
     
     // MARK: - Настройка `Collection View`
-
     private func setupCollectionView() {
-        
         collectionView = UICollectionView(frame: view.bounds, collectionViewLayout: createCompositionalLayout())
         collectionView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
-        // добавление collectionView на экран
+        collectionView.backgroundColor = UIColor(hex: "#E5E5E5")
+        /// добавление collectionView на экран
         view.addSubview(collectionView)
-        //регистрация ячеек
+        /// регистрация ячеек
         collectionView.register(CategoryCollectionViewCell.self, forCellWithReuseIdentifier: CategoryCollectionViewCell.reuseId)
         collectionView.register(UINib(nibName: String(describing: HotSalesCollectionViewCell.self), bundle: nil),
                                 forCellWithReuseIdentifier: HotSalesCollectionViewCell.reuseId)
         collectionView.register(UINib(nibName: String(describing: BestSellerCollectionViewCell.self), bundle: nil),
                                 forCellWithReuseIdentifier: BestSellerCollectionViewCell.reuseId)
         
-        
-//        collectionView.translatesAutoresizingMaskIntoConstraints = false
-//
-//        NSLayoutConstraint.activate([
-//            collectionView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
-//            collectionView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-//            collectionView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-//            collectionView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
-//        ])
+        collectionView.register(SectionHeaderCell.self,
+                                forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader,
+                                withReuseIdentifier: SectionHeaderCell.reuseId)
     }
     
     
@@ -115,16 +108,13 @@ final class HomeStoreCollectionViewController: UICollectionViewController {
                                 cellProvider: { (collectionView, indexPath, item) -> UICollectionViewCell? in
             
             let cell = UICollectionViewCell()
-//            print("Всего элементов createDataSourсe:", self.sections.count)
-//            print(item)
-            switch item {
 
+            switch item {
             case let item as CategoryElement:
                 guard let selectCategoryCell = collectionView.dequeueReusableCell(withReuseIdentifier: CategoryCollectionViewCell.reuseId,
                                                                                   for: indexPath) as? CategoryCollectionViewCell
                 else { fatalError("Cannot create new cell") }
                 selectCategoryCell.configure(with: item)
-                print("Создали ", item)
                 return selectCategoryCell
 
             case let item as HomeStoreElement:
@@ -140,12 +130,23 @@ final class HomeStoreCollectionViewController: UICollectionViewController {
                                                                               for: indexPath) as? BestSellerCollectionViewCell
                 else { fatalError("Cannot create new cell") }
                 bestSellerCell.configure(with: item)
-                print("Создали ", item)
                 return bestSellerCell
 
             default: return cell
             }
         })
+        
+        /// Настройка заголовка в зависимости от ячейки
+        dataSource?.supplementaryViewProvider = { collectionView, kind, indexPath in
+            guard let sectionHeader = collectionView.dequeueReusableSupplementaryView(ofKind: kind,
+                                                                                      withReuseIdentifier: SectionHeaderCell.reuseId,
+                                                                                      for: indexPath) as? SectionHeaderCell else { return nil }
+            guard let item = self.dataSource?.itemIdentifier(for: indexPath) else { return nil }
+            guard let section = self.dataSource?.snapshot().sectionIdentifier(containingItem: item) else { return nil }
+            if section.section.rawValue.isEmpty { return nil }
+            sectionHeader.titleLabel.text = section.section.rawValue
+            return sectionHeader
+        }
     }
     
     
@@ -169,140 +170,98 @@ final class HomeStoreCollectionViewController: UICollectionViewController {
     /// Создаем `layout` для секции `Select Category`
     private func createSelectCategorySection()  -> NSCollectionLayoutSection {
         
-        let padding: CGFloat = 16
-        
         /// Настройка `элемента` в группе
-        let itemSize = NSCollectionLayoutSize(widthDimension: .absolute(71),
-                                              heightDimension: .absolute(71))
+        let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0),
+                                              heightDimension: .fractionalHeight(1.0))
         let layoutItem = NSCollectionLayoutItem(layoutSize: itemSize)
-        layoutItem.contentInsets = NSDirectionalEdgeInsets.init(top: 0,
-                                                                leading: padding,
-                                                                bottom: 0,
-                                                                trailing: 8)
+        layoutItem.contentInsets = NSDirectionalEdgeInsets.init(top: 0, leading: 0,
+                                                                bottom: 0, trailing: 0)
         /// Настройка `группы` в секции
-        let layoutGroupSize = NSCollectionLayoutSize(widthDimension: .estimated(104),
-                                                     heightDimension: .estimated(88))
+        let layoutGroupSize = NSCollectionLayoutSize(widthDimension: .estimated(100),
+                                                     heightDimension: .estimated(100))
         let layoutGroup = NSCollectionLayoutGroup.horizontal(layoutSize: layoutGroupSize,
                                                              subitems: [layoutItem])
         /// Настройка `секции`
         let layoutSection = NSCollectionLayoutSection(group: layoutGroup)
         layoutSection.orthogonalScrollingBehavior = .continuous
-        layoutSection.contentInsets = NSDirectionalEdgeInsets.init(top: 24, leading: 12,
-                                                                   bottom: 0, trailing: 23)
+        layoutSection.contentInsets = NSDirectionalEdgeInsets.init(top: 0, leading: 17, bottom: 0, trailing: 0)
+        
+        /// Устанавливаем заголовок
+        let header = createSectionHeader()
+        layoutSection.boundarySupplementaryItems = [header]
+        
         return layoutSection
     }
     
     /// Создаем `layout` для секции `Hot Sales`
     private func createHotSalesSection()  -> NSCollectionLayoutSection {
-        
         /// Настройка `элемента` в группе
-        let itemSize = NSCollectionLayoutSize(widthDimension: .estimated(221),
-                                              heightDimension: .estimated(384))
+        let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), // 221 - 384
+                                              heightDimension: .fractionalHeight(1.0))
         let item = NSCollectionLayoutItem(layoutSize: itemSize)
         item.contentInsets = NSDirectionalEdgeInsets.init(top: 0, leading: 0,
-                                                          bottom: 0, trailing: 8)
-        
+                                                          bottom: 0, trailing: 0)
         /// Настройка `группы` в секции
         let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0),
-                                               heightDimension: .estimated(1))
-        let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize,
-                                                       subitems: [item])
-        
+                                               heightDimension: .absolute(200))
+        let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [item])
+            
         /// Настройка `секции`
         let section = NSCollectionLayoutSection(group: group)
-        section.contentInsets = NSDirectionalEdgeInsets.init(top: 374, leading: 8,
-                                                             bottom: 0, trailing: 0)
+        section.orthogonalScrollingBehavior = .groupPaging
+        section.contentInsets = NSDirectionalEdgeInsets.init(top: 0, leading: 0, bottom: 0, trailing: 0)
         
         return section
     }
     
     /// Создаем `layout` для секции `Best Seller`
     private func createBestSellerSection()  -> NSCollectionLayoutSection {
-        let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0),
-                                              heightDimension: .fractionalHeight(86))
+        let windowWidth = view.frame.width /// ширина экрана
+        /// Настройка `элемента` в группе
+        let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(0.49),
+                                              heightDimension: .fractionalHeight(1))
         let item = NSCollectionLayoutItem(layoutSize: itemSize)
-        item.contentInsets = NSDirectionalEdgeInsets.init(top: 0, leading: 0, bottom: 8, trailing: 0)
-        
-        let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0),
-                                               heightDimension: .estimated(1))
-        let group = NSCollectionLayoutGroup.vertical(layoutSize: groupSize, subitems: [item])
-        
+        item.contentInsets = NSDirectionalEdgeInsets.init(top: 0, leading: 0, bottom: 17, trailing: 17)
+        /// Настройка `группы` в секции
+        let groupSize = NSCollectionLayoutSize(widthDimension: .absolute(windowWidth),
+                                               heightDimension: .absolute(windowWidth/1.5))
+        let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [item])
+        /// Настройка `секции`
         let section = NSCollectionLayoutSection(group: group)
-        section.contentInsets = NSDirectionalEdgeInsets.init(top: 66, leading: 20, bottom: 0, trailing: 20)
+        section.contentInsets = NSDirectionalEdgeInsets.init(top: 0, leading: 17, bottom: 0, trailing: 17)
+        
+        /// Устанавливаем заголовок
+        let header = createSectionHeader()
+        section.boundarySupplementaryItems = [header]
         
         return section
     }
     
-    
-    // MARK: - UICollectionViewDataSource
-
-//    override func numberOfSections(in collectionView: UICollectionView) -> Int {
-//        return 0
-//    }
-//
-//
-//    override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-//        // #warning Incomplete implementation, return the number of items
-//        return 0
-//    }
-//
-//    override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-//        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath)
-//
-//        // Configure the cell
-//
-//        return cell
-//    }
-
-    // MARK: UICollectionViewDelegate
-
-    /*
-    // Uncomment this method to specify if the specified item should be highlighted during tracking
-    override func collectionView(_ collectionView: UICollectionView, shouldHighlightItemAt indexPath: IndexPath) -> Bool {
-        return true
+    /// Настраиваем заголовок
+    private func createSectionHeader() -> NSCollectionLayoutBoundarySupplementaryItem {
+        let layoutSectionHeaderSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0),
+                                                             heightDimension: .absolute(50))
+        let layoutSectionHeader = NSCollectionLayoutBoundarySupplementaryItem(layoutSize: layoutSectionHeaderSize,
+                                                                              elementKind: UICollectionView.elementKindSectionHeader,
+                                                                              alignment: .topLeading)
+        return layoutSectionHeader
     }
-    */
-
-    /*
-    // Uncomment this method to specify if the specified item should be selected
-    override func collectionView(_ collectionView: UICollectionView, shouldSelectItemAt indexPath: IndexPath) -> Bool {
-        return true
-    }
-    */
-
-    /*
-    // Uncomment these methods to specify if an action menu should be displayed for the specified item, and react to actions performed on the item
-    override func collectionView(_ collectionView: UICollectionView, shouldShowMenuForItemAt indexPath: IndexPath) -> Bool {
-        return false
-    }
-
-    override func collectionView(_ collectionView: UICollectionView, canPerformAction action: Selector, forItemAt indexPath: IndexPath, withSender sender: Any?) -> Bool {
-        return false
-    }
-
-    override func collectionView(_ collectionView: UICollectionView, performAction action: Selector, forItemAt indexPath: IndexPath, withSender sender: Any?) {
-    
-    }
-    */
-
-    // MARK: - Navigation Bar
-    private func setupNavigationBar() {
-//        title = "PizzaShop"
-        navigationController?.navigationBar.prefersLargeTitles = false
-        let navBarAppearance = UINavigationBarAppearance()
-//        navBarAppearance.configureWithOpaqueBackground()
-//
-//        navBarAppearance.titleTextAttributes = [.foregroundColor: UIColor.white]
-//        navBarAppearance.largeTitleTextAttributes = [.foregroundColor: UIColor.white]
-        navBarAppearance.backgroundColor = UIColor.brown
-//
-//        navigationController?.navigationBar.standardAppearance = navBarAppearance
-//        navigationController?.navigationBar.scrollEdgeAppearance = navBarAppearance
+}
+// MARK: - SwiftUI - Для отображения Результата в Превью
+import SwiftUI
+struct ListProvider: PreviewProvider {
+    static var previews: some View {
+        ContainterView().edgesIgnoringSafeArea(.all)
     }
     
-    // MARK: -
-    
-    
-    
-    
+    struct ContainterView: UIViewControllerRepresentable {
+        
+        let listVC = HomeStoreCollectionViewController()
+        func makeUIViewController(context: UIViewControllerRepresentableContext<ListProvider.ContainterView>) -> HomeStoreCollectionViewController {
+            return listVC
+        }
+        
+        func updateUIViewController(_ uiViewController: ListProvider.ContainterView.UIViewControllerType, context: UIViewControllerRepresentableContext<ListProvider.ContainterView>) {
+        }
+    }
 }

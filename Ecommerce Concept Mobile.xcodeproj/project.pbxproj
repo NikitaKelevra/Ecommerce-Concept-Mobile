@@ -24,6 +24,10 @@
 		68B7356B28BA6B1A008C0C0F /* HotSalesCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68B7356928BA6B1A008C0C0F /* HotSalesCollectionViewCell.swift */; };
 		68B7356C28BA6B1A008C0C0F /* HotSalesCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 68B7356A28BA6B1A008C0C0F /* HotSalesCollectionViewCell.xib */; };
 		68B7356E28C1D9BA008C0C0F /* CategoriesData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68B7356D28C1D9BA008C0C0F /* CategoriesData.swift */; };
+		68B7357028C23E2B008C0C0F /* String+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68B7356F28C23E2B008C0C0F /* String+Extensions.swift */; };
+		68B7357328C242DA008C0C0F /* UIColor+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68B7357228C242DA008C0C0F /* UIColor+Extensions.swift */; };
+		68B7357528C34902008C0C0F /* UIImageView+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68B7357428C34902008C0C0F /* UIImageView+Extensions.swift */; };
+		68B7357728C4C584008C0C0F /* SectionHeaderCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68B7357628C4C584008C0C0F /* SectionHeaderCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -46,6 +50,10 @@
 		68B7356928BA6B1A008C0C0F /* HotSalesCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HotSalesCollectionViewCell.swift; sourceTree = "<group>"; };
 		68B7356A28BA6B1A008C0C0F /* HotSalesCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = HotSalesCollectionViewCell.xib; sourceTree = "<group>"; };
 		68B7356D28C1D9BA008C0C0F /* CategoriesData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoriesData.swift; sourceTree = "<group>"; };
+		68B7356F28C23E2B008C0C0F /* String+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Extensions.swift"; sourceTree = "<group>"; };
+		68B7357228C242DA008C0C0F /* UIColor+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+Extensions.swift"; sourceTree = "<group>"; };
+		68B7357428C34902008C0C0F /* UIImageView+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImageView+Extensions.swift"; sourceTree = "<group>"; };
+		68B7357628C4C584008C0C0F /* SectionHeaderCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SectionHeaderCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -84,6 +92,7 @@
 				68B7354F28B7FCC3008C0C0F /* Resourses */,
 				68B7353A28B7FBFF008C0C0F /* AppDelegate.swift */,
 				68B7355D28BA04B7008C0C0F /* Supporting Files */,
+				68B7357128C242B8008C0C0F /* Extensions */,
 				68B7354528B7FC00008C0C0F /* LaunchScreen.storyboard */,
 				68B7354828B7FC01008C0C0F /* Info.plist */,
 			);
@@ -144,8 +153,27 @@
 				68B7356A28BA6B1A008C0C0F /* HotSalesCollectionViewCell.xib */,
 				68B7356528BA6AD5008C0C0F /* BestSellerCollectionViewCell.swift */,
 				68B7356628BA6AD5008C0C0F /* BestSellerCollectionViewCell.xib */,
+				68B7357828C4C58B008C0C0F /* Header */,
 			);
 			path = HomeStoreCells;
+			sourceTree = "<group>";
+		};
+		68B7357128C242B8008C0C0F /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				68B7356F28C23E2B008C0C0F /* String+Extensions.swift */,
+				68B7357228C242DA008C0C0F /* UIColor+Extensions.swift */,
+				68B7357428C34902008C0C0F /* UIImageView+Extensions.swift */,
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
+		68B7357828C4C58B008C0C0F /* Header */ = {
+			isa = PBXGroup;
+			children = (
+				68B7357628C4C584008C0C0F /* SectionHeaderCell.swift */,
+			);
+			path = Header;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -221,6 +249,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				68B7357728C4C584008C0C0F /* SectionHeaderCell.swift in Sources */,
+				68B7357528C34902008C0C0F /* UIImageView+Extensions.swift in Sources */,
 				68B7356028BA54F0008C0C0F /* CategoryCollectionViewCell.swift in Sources */,
 				68B7355228B7FD53008C0C0F /* NetworkManager.swift in Sources */,
 				68B7355528B7FF3C008C0C0F /* HomeStore.swift in Sources */,
@@ -232,6 +262,8 @@
 				68B7356B28BA6B1A008C0C0F /* HotSalesCollectionViewCell.swift in Sources */,
 				68B7353B28B7FBFF008C0C0F /* AppDelegate.swift in Sources */,
 				68B7353D28B7FBFF008C0C0F /* SceneDelegate.swift in Sources */,
+				68B7357328C242DA008C0C0F /* UIColor+Extensions.swift in Sources */,
+				68B7357028C23E2B008C0C0F /* String+Extensions.swift in Sources */,
 				68B7356728BA6AD5008C0C0F /* BestSellerCollectionViewCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

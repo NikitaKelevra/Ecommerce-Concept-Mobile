@@ -38,7 +38,7 @@ struct BestSeller: Codable, Hashable {
     }
 }
 
-// MARK: - HomeStoreElement
+// MARK: - HomeStoreElement (Hot Sales Element)
 struct HomeStoreElement: Codable, Hashable {
     let id: Int
     let isNew: Bool?

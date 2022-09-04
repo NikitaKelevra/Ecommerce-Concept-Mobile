@@ -9,12 +9,12 @@ import Foundation
 
  /// Секции основного экрана c соответствующими  элементами в них
 struct ItemsList: Hashable {
-    let section: TypeOfItem
+    let section: TypeOfSection
     let items: [AnyHashable]
 }
 
-enum TypeOfItem: Hashable {
-    case selectCategory
+enum TypeOfSection: String, Hashable {
+    case selectCategory = "Select Category"
     case hotSales
-    case bestSeller
+    case bestSeller = "Best Sellers"
 }

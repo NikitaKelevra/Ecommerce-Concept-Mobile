@@ -9,7 +9,7 @@ import UIKit
 
 class HotSalesCollectionViewCell: UICollectionViewCell {
 
-    static var reuseId: String = "HotSalesCollectionViewCell"
+    static let reuseId: String = "HotSalesCollectionViewCell"
 
     @IBOutlet weak var newLabel: UILabel!
     @IBOutlet weak var brandTitleLabel: UILabel!
@@ -30,7 +30,8 @@ class HotSalesCollectionViewCell: UICollectionViewCell {
     
     
     func configure(with item: HomeStoreElement) {
-        newLabel.isEnabled = item.isNew ?? false
+        
+        showNewLabel(item.isNew)
         brandTitleLabel.text = item.title
         infoBrandLabel.text = item.subtitle
         getImageFromUrl(item.picture)
@@ -50,10 +51,32 @@ class HotSalesCollectionViewCell: UICollectionViewCell {
         }
     }
     
+    private func showNewLabel(_ isNew: Bool?) {
+        guard let hideNew = isNew else {
+            newLabel.isHidden = true
+            return
+        }
+        newLabel.isHidden = !hideNew
+    }
+    
     ///Настройка ячейки
     private func setupCell() {
-//        mainImageView.layer.cornerRadius = 4
-//        mainImageView.clipsToBounds = true
+
+        ///Настройка лейбла `New`
+        newLabel.attributedText = newLabel.text?.getUnderLineAttributedText()
+        newLabel.layer.masksToBounds = true
+        newLabel.layer.cornerRadius = newLabel.frame.width / 2
+        newLabel.backgroundColor = UIColor(hex: "#FF6E4E")
+        newLabel.textColor = .white
+
+        
+        ///Настройка кнопки `Buy Now!`
+        buyButton.setAttributedTitle(buyButton.titleLabel?.text?.getUnderLineAttributedText(), for: .normal)
+        buyButton.clipsToBounds = true
+        buyButton.layer.cornerRadius = 10
+        
+        self.translatesAutoresizingMaskIntoConstraints = false
+        
     }
     
     
