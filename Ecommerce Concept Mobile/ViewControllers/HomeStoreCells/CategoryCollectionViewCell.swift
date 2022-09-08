@@ -12,6 +12,8 @@ class CategoryCollectionViewCell: UICollectionViewCell {
     //MARK: - Properties
     static let reuseId: String = "CategoryCollectionViewCell"
     
+    var isSelectedCategory = false
+    
     /// Оранжевый кружок
     private lazy var circleImage: UIImageView  = {
         let imageView = UIImageView(frame: CGRect(x: 0, y: 0, width: 71, height: 71))
@@ -51,9 +53,6 @@ class CategoryCollectionViewCell: UICollectionViewCell {
         return stackView
     }()
     
-    
-    
-    
     //MARK: - Init
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -80,10 +79,6 @@ class CategoryCollectionViewCell: UICollectionViewCell {
         addSubview(categoryStack)
     }
     
-    
-    
-    
-    
     private func setupElements() {
         
         circleImage.translatesAutoresizingMaskIntoConstraints = false
@@ -105,7 +100,10 @@ class CategoryCollectionViewCell: UICollectionViewCell {
 //        categoryStack.leftAnchor.constraint(equalTo: self.leftAnchor, constant: 0).isActive = true
 //        categoryStack.topAnchor.constraint(equalTo: self.topAnchor).isActive = true
         
-//        categoryStack.backgroundColor = .green
+        if isSelectedCategory {
+            categoryImageView.tintColor = .white
+            circleImage.backgroundColor = UIColor(hex: "#FF6E4E")
+        }
         
     }
     

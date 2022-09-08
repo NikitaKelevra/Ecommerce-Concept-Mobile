@@ -63,7 +63,7 @@ class HotSalesCollectionViewCell: UICollectionViewCell {
     private func setupCell() {
 
         ///Настройка лейбла `New`
-        newLabel.attributedText = newLabel.text?.getUnderLineAttributedText()
+//        newLabel.attributedText = newLabel.text?.getUnderLineAttributedText()
         newLabel.layer.masksToBounds = true
         newLabel.layer.cornerRadius = newLabel.frame.width / 2
         newLabel.backgroundColor = UIColor(hex: "#FF6E4E")

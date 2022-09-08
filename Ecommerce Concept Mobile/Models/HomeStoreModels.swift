@@ -1,5 +1,5 @@
 //
-//  HomeStore.swift
+//  HomeStoreModels.swift
 //  Ecommerce Concept Mobile
 //
 //  Created by Сперанский Никита on 25.08.2022.
@@ -7,9 +7,21 @@
 
 import Foundation
 
+// MARK: - ItemsList
+// Секции основного экрана c соответствующими  элементами в них
+struct ItemsList: Hashable {
+   let section: TypeOfSection
+   let items: [AnyHashable]
+}
 
-// Модели элементов основного экрана
+enum TypeOfSection: String, Hashable {
+   case selectCategory = "Select Category"
+   case hotSales
+   case bestSeller = "Best Sellers"
+}
+
 // MARK: - HomeStore Model
+// Модели элементов основного экрана
 struct HomeStore: Codable, Hashable {
     let homeStore: [HomeStoreElement]
     let bestSeller: [BestSeller]
@@ -54,10 +66,28 @@ struct HomeStoreElement: Codable, Hashable {
     }
 }
 
-
 // MARK: - CategoryElements Model
-
-struct CategoryElement: Hashable {
+class CategoryElement: Hashable {
+    
     let title: String
     let picture: String
+    
+    init(title: String, picture: String) {
+        self.title = title
+        self.picture = picture
+    }
+    
+    // MARK: Hashable
+    func hash(into hasher: inout Hasher) {
+        hasher.combine(title)
+        hasher.combine(picture)
+    }
+    
+    static func == (lhs: CategoryElement,
+                    rhs: CategoryElement) -> Bool {
+        if lhs.title == rhs.title && lhs.picture == rhs.picture {
+            return true
+        }
+        return false
+    }
 }

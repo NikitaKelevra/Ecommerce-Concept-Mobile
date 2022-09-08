@@ -8,8 +8,6 @@
 import UIKit
 import SwiftUI
 
-//private let reuseIdentifier = "Cell"
-
 // Основной VC
 final class HomeStoreCollectionViewController: UICollectionViewController {
     
@@ -18,9 +16,7 @@ final class HomeStoreCollectionViewController: UICollectionViewController {
     typealias DataSource = UICollectionViewDiffableDataSource<ItemsList, AnyHashable>
     typealias Snapshot = NSDiffableDataSourceSnapshot<ItemsList, AnyHashable>
     
-    var dataSource: DataSource?
-    //    var collectionView: UICollectionView!
-    
+    private var dataSource: DataSource?
     
     private var sections: [ItemsList] = []
     
@@ -47,7 +43,6 @@ final class HomeStoreCollectionViewController: UICollectionViewController {
     }
     
     // MARK: - Загрузка данных в массив 'sections'
-    
     private func fetchItems() {
         NetworkManager.shared.fetchHomeStoreData(completion: { homeStoreData, error in
             guard let bestSellerItems = homeStoreData?.bestSeller,
@@ -87,8 +82,9 @@ final class HomeStoreCollectionViewController: UICollectionViewController {
         collectionView.register(SectionHeaderCell.self,
                                 forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader,
                                 withReuseIdentifier: SectionHeaderCell.reuseId)
+        collectionView.delegate = self /// Исполнитель(делегат) сам CollectionView - для метода didSelectItem
+        collectionView.dataSource = self
     }
-    
     
     // MARK: - Diffable Data Source
     // Подгружает данные в CollectionView
@@ -98,7 +94,9 @@ final class HomeStoreCollectionViewController: UICollectionViewController {
         for section in sections {
             snapshot.appendItems(section.items, toSection: section) /// добавляем данные в секции
         }
-        //        print("Всего элементов reloadData:", self.sections.count)
+        
+//        if let items
+        
         dataSource?.apply(snapshot)
     }
     
@@ -147,8 +145,7 @@ final class HomeStoreCollectionViewController: UICollectionViewController {
             sectionHeader.titleLabel.text = section.section.rawValue
             return sectionHeader
         }
-    }
-    
+    }    
     
     // MARK: - CollectionViewCompositionalLayout
     private func createCompositionalLayout() -> UICollectionViewLayout {
@@ -247,6 +244,82 @@ final class HomeStoreCollectionViewController: UICollectionViewController {
         return layoutSectionHeader
     }
 }
+
+// MARK: - Реализация нажатий на элементы СollectionView
+extension HomeStoreCollectionViewController {
+    override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+
+        print(indexPath)
+
+        switch indexPath.first {
+        case 0: print("Категории")
+
+            guard let selectedItem = dataSource?.itemIdentifier(for: indexPath) else {
+                print("не сработало1")
+                break
+            }
+
+            guard let selectedcell = collectionView.cellForItem(at: indexPath) as? CategoryCollectionViewCell else {
+                print("не сработал каст до ячейки")
+                break
+            }
+//            print(selectedcell.categoryTitleLabel.text)
+            selectedcell.isSelectedCategory = true
+
+                        
+            guard var newSnapshot = dataSource?.snapshot() else {
+                print("не сработал newSnapshot")
+                break }
+
+            newSnapshot.reconfigureItems([selectedItem])
+
+            dataSource?.apply(newSnapshot)
+
+        case 2: print("Лучшие продажи")
+
+            
+        default: break
+
+
+        }
+
+        collectionView.deselectItem(at: indexPath, animated: true)
+
+
+    }
+
+   
+    override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        print(indexPath , " в cellForItemAt ")
+        
+        
+        guard let cell: CategoryCollectionViewCell = self.collectionView.dequeueReusableCell(withReuseIdentifier: CategoryCollectionViewCell.reuseId, for: indexPath) as? CategoryCollectionViewCell else {
+            fatalError("Unexpected Index Path")
+        }
+        print("Прошла")
+        return cell
+    }
+    
+//    func prepareForSegue(sender: AnyObject?) {
+//        guard let detailsVC: ProductDetailsViewController = UIViewController as? ProductDetailsViewController else { return }
+//        navigationController?.pushViewController(detailsVC, animated: true)
+//
+////        testView.testString = name as! String
+////        print(testView.testString)
+//    }
+}
+
+//    func handleNewItems(_ newItems: [AnyHashable]) {
+//        var snapShot = Snapshot()
+//        let diff = newItems.difference(from: snapShot.itemIdentifiers)
+//        let currentIdentifiers = snapShot.itemIdentifiers
+//        guard let newIdentifiers = currentIdentifiers.applying(diff) else {
+//            return
+//        }
+//        snapShot.deleteItems(currentIdentifiers)
+//        snapShot.appendItems(newIdentifiers)
+//        dataSource?.apply(snapShot, animatingDifferences: true)
+//    }
 // MARK: - SwiftUI - Для отображения Результата в Превью
 import SwiftUI
 struct ListProvider: PreviewProvider {

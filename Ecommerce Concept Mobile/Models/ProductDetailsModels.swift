@@ -1,5 +1,5 @@
 //
-//  Specifications.swift
+//  ProductDetailsModels.swift
 //  Ecommerce Concept Mobile
 //
 //  Created by Сперанский Никита on 25.08.2022.
