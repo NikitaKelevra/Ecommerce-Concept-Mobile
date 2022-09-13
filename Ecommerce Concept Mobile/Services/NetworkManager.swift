@@ -23,6 +23,7 @@ struct NetworkManager {
     // MARK: -
     
     typealias RailCompletionClosure = ((HomeStore?, Error?) -> Void)
+    typealias SpecificationsCompletionClosure = ((Specifications?, Error?) -> Void)
     
     // Получаем данные из homeStoreAPI
     public func fetchHomeStoreData(completion: RailCompletionClosure?) {
@@ -33,6 +34,16 @@ struct NetworkManager {
         executeRequest(request: request, completion: completion)
     }
     
+    // Получаем данные из homeStoreAPI
+    public func fetchPhonesSpecifications(completion: SpecificationsCompletionClosure?) {
+        guard let request = createRequest(for: Urls.specificationsAPI.rawValue) else {
+            completion?(nil, NetworkError.invalidUrl)
+            return
+        }
+        executeRequest(request: request, completion: completion)
+    }
+    
+    // MARK: -
     
     // Создаем настраиваем URLRequest из строки URL
     private func createRequest(for url: String) -> URLRequest? {

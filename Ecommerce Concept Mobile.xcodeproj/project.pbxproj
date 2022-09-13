@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		684486A528CFA4A000ECCAAF /* ProductHeaderCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 684486A428CFA4A000ECCAAF /* ProductHeaderCell.swift */; };
 		68B7353B28B7FBFF008C0C0F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68B7353A28B7FBFF008C0C0F /* AppDelegate.swift */; };
 		68B7353D28B7FBFF008C0C0F /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68B7353C28B7FBFF008C0C0F /* SceneDelegate.swift */; };
 		68B7354228B7FBFF008C0C0F /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 68B7354028B7FBFF008C0C0F /* Main.storyboard */; };
@@ -31,6 +32,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		684486A428CFA4A000ECCAAF /* ProductHeaderCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductHeaderCell.swift; sourceTree = "<group>"; };
 		68B7353728B7FBFF008C0C0F /* Ecommerce Concept Mobile.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Ecommerce Concept Mobile.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		68B7353A28B7FBFF008C0C0F /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		68B7353C28B7FBFF008C0C0F /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -67,6 +69,22 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		684486A228CFA3C900ECCAAF /* ProductViewCells */ = {
+			isa = PBXGroup;
+			children = (
+				684486A328CFA45400ECCAAF /* Header */,
+			);
+			name = ProductViewCells;
+			sourceTree = "<group>";
+		};
+		684486A328CFA45400ECCAAF /* Header */ = {
+			isa = PBXGroup;
+			children = (
+				684486A428CFA4A000ECCAAF /* ProductHeaderCell.swift */,
+			);
+			path = Header;
+			sourceTree = "<group>";
+		};
 		68B7352E28B7FBFF008C0C0F = {
 			isa = PBXGroup;
 			children = (
@@ -104,6 +122,7 @@
 			children = (
 				68B7355B28B805F2008C0C0F /* HomeStoreCollectionViewController.swift */,
 				68B7357928C68266008C0C0F /* ProductDetailsViewController.swift */,
+				684486A228CFA3C900ECCAAF /* ProductViewCells */,
 				68B7356228BA54F8008C0C0F /* HomeStoreCells */,
 			);
 			path = ViewControllers;
@@ -256,6 +275,7 @@
 				68B7355528B7FF3C008C0C0F /* HomeStoreModels.swift in Sources */,
 				68B7355A28B80165008C0C0F /* Basket.swift in Sources */,
 				68B7355C28B805F2008C0C0F /* HomeStoreCollectionViewController.swift in Sources */,
+				684486A528CFA4A000ECCAAF /* ProductHeaderCell.swift in Sources */,
 				68B7355828B800E8008C0C0F /* ProductDetailsModels.swift in Sources */,
 				68B7357A28C68266008C0C0F /* ProductDetailsViewController.swift in Sources */,
 				68B7356E28C1D9BA008C0C0F /* CategoriesData.swift in Sources */,

@@ -7,8 +7,20 @@
 
 import Foundation
 
+// MARK: - ItemsList
+// Секции основного экрана c соответствующими  элементами в них
+//struct DetailsList: Hashable {
+//   let section: detailsSections
+//   let items: Specifications
+//}
+
+enum detailsSections: Hashable, CaseIterable {
+   case phoneImage
+   case phoneDetails
+}
+
 // MARK: - Specifications
-struct Specifications: Codable {
+struct Specifications: Codable, Hashable {
     let cpu, camera: String
     let capacity, color: [String]
     let id: String
